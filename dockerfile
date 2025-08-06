@@ -1,33 +1,29 @@
-# 使用官方 Go 镜像作为构建环境
+# 第一阶段：带 CGO 支持的构建阶段
 FROM golang:1.22-alpine AS builder
 
-# 安装必要依赖
-RUN apk add --no-cache git
+# 安装编译 SQLite 所需的工具和头文件
+RUN apk add --no-cache gcc musl-dev sqlite-dev
 
-# 设置工作目录
+# 设置 CGO 支持
+ENV CGO_ENABLED=1
+
 WORKDIR /app
 
-# 将 go.mod 和 go.sum 复制并下载依赖
 COPY go.mod go.sum ./
 RUN go mod download
 
-# 复制项目文件
 COPY . .
-
-# 构建可执行文件
 RUN go build -o main .
-    
-# 使用更小的基础镜像运行程序
+
+# 第二阶段：更小的运行环境
 FROM alpine:latest
+
+# 拷贝运行依赖（sqlite3 运行库）
+RUN apk add --no-cache sqlite-libs
 
 WORKDIR /root/
 
-# 拷贝构建好的二进制文件和数据库文件（如果存在）
 COPY --from=builder /app/main .
-COPY --from=builder /app/books.db .
 
-# 暴露端口
 EXPOSE 8080
-
-# 启动应用
 CMD ["./main"]

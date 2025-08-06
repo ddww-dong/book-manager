@@ -2,6 +2,7 @@ package config
 
 import (
 	"book-manager/models"
+	"log"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -12,8 +13,8 @@ func InitDB() {
 	var err error
 	DB, err = gorm.Open(sqlite.Open("books.db"), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
+		log.Fatalf("failed to connect database: %v", err)
 	}
-	
+
 	DB.AutoMigrate(&models.User{}, &models.Book{})
 }
