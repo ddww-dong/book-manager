@@ -1,6 +1,6 @@
 # Book Manager
 
-一个基于 **Golang + Gin + GORM + SQLite** 开发的图书管理系统示例，支持 **用户注册、登录、JWT 鉴权、图书增删改查、借还书** 等功能。项目采用 **RESTful API** 风格，并支持 **Docker 容器化部署**。
+一个基于 **Golang 1.22+ + Gin + GORM + SQLite** 开发的图书管理系统示例，支持 **用户注册、登录、JWT 鉴权、图书增删改查、借阅归还** 等功能。项目采用 **RESTful API** 风格，并支持 **Docker 容器化部署**。
 
 ## 功能特性
 
@@ -8,18 +8,20 @@
   - 用户注册
   - 用户登录并获取 JWT Token
 - **图书模块**（需要登录）
-  - 获取图书列表
+  - 获取图书列表（支持分页查询）
   - 新增图书
   - 更新图书信息
   - 删除图书
-  - 借书 / 还书
+  - 借书 / 还书（业务逻辑控制）
 - **安全**
   - 使用 **JWT**（JSON Web Token）鉴权
   - 未登录用户无法访问 `/api` 下的受保护接口
+- **异常处理**
+  - 统一异常处理和响应结构，规范状态码和返回格式，提高接口健壮性和一致性
 
 ## 🛠 技术栈
 
-- **语言**：Golang 1.22+
+- **语言**：Golang 1.22+（使用 CGO 支持）
 - **框架**：[Gin](https://github.com/gin-gonic/gin)
 - **数据库**：SQLite
 - **ORM**：[GORM](https://gorm.io/)
@@ -29,14 +31,16 @@
 ## 📂 项目结构
 
 
+
+
 ```
 book-manager/  
 ├── config/           # 数据库初始化配置  
 ├── controllers/      # 控制器（业务逻辑）  
-├── middlewares/      # Gin 中间件（JWT 验证等）  
+├── middlewares/      # Gin 中间件（JWT 验证、全局异常捕获等）  
 ├── models/           # 数据库模型  
 ├── routes/           # 路由定义  
-├── utils/            # 工具方法（Token 生成/解析等）  
+├── utils/            # 工具方法（Token 生成/解析，统一响应封装等）  
 ├── books.db          # SQLite 数据库文件  
 ├── main.go           # 程序入口  
 ├── Dockerfile        # Docker 构建文件  
