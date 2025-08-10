@@ -1,5 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiZXhwIjoxNzUyOTk3MjkyfQ.8vA1YSdgMhu87aNdex_xbGls4OzbiYm9Dfyw6zQZEdg
-
+@token =
 ### 用户注册
 POST http://localhost:8080/register
 Content-Type: application/json
@@ -43,13 +42,13 @@ Authorization: Bearer {{token}}
 }
 
 ### 删除图书（请替换 :id 为具体图书ID）
-DELETE http://localhost:8080/api/books/1
+DELETE http://localhost:8080/api/books/2
 Authorization: Bearer {{token}}
 
 ### 借阅图书（请替换 :id 为具体图书ID）
-POST http://localhost:8080/api/books/2/borrow
+POST http://localhost:8080/api/books/4/borrow
 Authorization: Bearer {{token}}
 
 ### 归还图书（请替换 :id 为具体图书ID）
-POST http://localhost:8080/api/books/2/return
+POST http://localhost:8080/api/books/4/return
 Authorization: Bearer {{token}}
