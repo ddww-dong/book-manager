@@ -79,8 +79,6 @@ docker run -p 8080:8080 book-manager
 
 ## 📌 API 使用示例
 
-## API 使用说明
-
 ### 用户注册
 ```bash
 POST http://localhost:8080/register
