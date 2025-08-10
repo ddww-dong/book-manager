@@ -8,6 +8,7 @@ import (
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
+	r.Use(middlewares.RecoveryMiddleware())
 
 	r.POST("/register", controllers.Register)
 	r.POST("/login", controllers.Login)
